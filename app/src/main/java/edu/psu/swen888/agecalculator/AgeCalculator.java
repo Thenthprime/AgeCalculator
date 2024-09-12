@@ -1,15 +1,12 @@
 package edu.psu.swen888.agecalculator;
 
 
-import static android.app.ProgressDialog.show;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.time.LocalDate;
@@ -18,7 +15,8 @@ import java.time.temporal.ChronoUnit;
 
 
 public class AgeCalculator extends AppCompatActivity  {
-    private TextView mResultTextView;
+
+    //pull fields as defined in activity_age_calculator xml
     private EditText mInputDOBEditText;
     private EditText mInputFirstEditText;
     private Button mCalculateAgeButton;
@@ -27,43 +25,41 @@ public class AgeCalculator extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        //layout according to the activity_age_calculator.xml file
         setContentView(R.layout.activity_age_calculator);
 
-        mResultTextView = findViewById(R.id.result_text);
+        //define the user input fields
         mInputDOBEditText = findViewById(R.id.dOB_field);
         mInputFirstEditText = findViewById(R.id.firstName_field);
         mCalculateAgeButton = findViewById(R.id.check_button);
 
+        //assign clickListener functionality to the mcalcualteAgeButton button
         mCalculateAgeButton.setOnClickListener(new View.OnClickListener(){
             @Override
 
+            //method to react after user clicks "calculate age" button
             public void onClick(View v){
+                //grab user input DOB
                 String dateOfBirth = mInputDOBEditText.getText().toString();
 
+                //try catch method to respond to invalid input
                 try{
+                    //parse the date the user entered
                     LocalDate dob = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+                    //grab today's date
                     LocalDate currentDate = LocalDate.now();
+                    //calculate the number of years that have passed
                     int calculatedAge = (int) ChronoUnit.YEARS.between(dob, currentDate);
+                    //grab the first name to put into the toast message
                     String firstName = mInputFirstEditText.getText().toString();
+                    //display toast message with the result
                     Toast.makeText(AgeCalculator.this,(firstName + ", in case you forgot, you are " + calculatedAge + " years old!"),Toast.LENGTH_SHORT).show();
                 }
                 catch(Exception e){
+                    //give a reminder to the user about invalid input
                     Toast.makeText(AgeCalculator.this,("Invalid Input, please enter the date MM/DD/YY"),Toast.LENGTH_SHORT).show();
                 }
-              }
+            }
         });
     }
-
-
-    public int calculateAge(int year){
-        LocalDate currentDate = LocalDate.now();
-        int todayYear = currentDate.getYear();
-
-        int yearsOld = todayYear - year;
-
-
-        return yearsOld;
-    }
-
-
 }
