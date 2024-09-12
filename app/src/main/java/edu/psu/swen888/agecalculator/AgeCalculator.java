@@ -1,11 +1,19 @@
 package edu.psu.swen888.agecalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.icu.text.DateFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Objects;
 
 public class AgeCalculator extends AppCompatActivity  {
     private TextView mResultTextView;
@@ -28,22 +36,31 @@ public class AgeCalculator extends AppCompatActivity  {
             @Override
 
             public void onClick(View v){
-                //Get the number from the EditText
-                String numberString = mInputDOBEditText.getText().toString();
-                int number = Integer.parseInt(numberString);
+                String dateOfBirth = mInputDOBEditText.getText().toString();
+                LocalDate ld  = LocalDate.parse(dateOfBirth,
+                        DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+                int yearOfBirth = ld.getYear();
+
                 String firstName = mInputFirstEditText.getText().toString();
 
-                  int calculateAge = calculateAge(number);
 
-                mResultTextView.setText(firstName + ", in case you forgot, you are " + calculateAge(number) + " years old!");
+                int calculatedAge = calculateAge(yearOfBirth);
+
+                mResultTextView.setText(firstName + ", in case you forgot, you are " + calculatedAge + " years old!");
                 mResultTextView.setVisibility(View.VISIBLE);
             }
         });
     }
 
 
-    public int calculateAge(int number){
-        return 5;
+    public int calculateAge(int year){
+        LocalDate currentDate = LocalDate.now();
+        int todayYear = currentDate.getYear();
+
+        int yearsOld = todayYear - year;
+
+
+        return yearsOld;
     }
 
 

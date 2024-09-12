@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="Enter Your Date of Birth" />
+        android:hint="Enter Your Date of Birth (MM/DD/YYYY)" />
     <Button
         android:id="@+id/check_button"
         android:layout_width="wrap_content"
