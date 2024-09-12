@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 
 public class AgeCalculator extends AppCompatActivity  {
@@ -40,9 +41,9 @@ public class AgeCalculator extends AppCompatActivity  {
                 String dateOfBirth = mInputDOBEditText.getText().toString();
 
                 try{
-                    LocalDate ld = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+                    LocalDate dob = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
                     LocalDate currentDate = LocalDate.now();
-                    int calculatedAge = currentDate.compareTo(ld);
+                    int calculatedAge = (int) ChronoUnit.YEARS.between(dob, currentDate);
                     String firstName = mInputFirstEditText.getText().toString();
                     Toast.makeText(AgeCalculator.this,(firstName + ", in case you forgot, you are " + calculatedAge + " years old!"),Toast.LENGTH_SHORT).show();
                 }
