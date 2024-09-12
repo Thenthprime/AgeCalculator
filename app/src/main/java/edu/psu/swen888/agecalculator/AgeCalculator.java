@@ -1,22 +1,20 @@
 package edu.psu.swen888.agecalculator;
 
-import static java.time.Year.parse;
+
+import static android.app.ProgressDialog.show;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.icu.text.DateFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.ResolverStyle;
-import java.util.Date;
-import java.util.Objects;
+
 
 public class AgeCalculator extends AppCompatActivity  {
     private TextView mResultTextView;
@@ -43,16 +41,13 @@ public class AgeCalculator extends AppCompatActivity  {
 
                 try{
                     LocalDate ld = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-                    int yearOfBirth = ld.getYear();
-                    int calculatedAge = calculateAge(yearOfBirth);
+                    LocalDate currentDate = LocalDate.now();
+                    int calculatedAge = currentDate.compareTo(ld);
                     String firstName = mInputFirstEditText.getText().toString();
-                    mResultTextView.setText(firstName + ", in case you forgot, you are " + calculatedAge + " years old!");
-                    mResultTextView.setVisibility(View.VISIBLE);
+                    Toast.makeText(AgeCalculator.this,(firstName + ", in case you forgot, you are " + calculatedAge + " years old!"),Toast.LENGTH_SHORT).show();
                 }
                 catch(Exception e){
-                    mResultTextView.setText("invalid input");
-                    mResultTextView.setVisibility(View.VISIBLE);
-
+                    Toast.makeText(AgeCalculator.this,("Invalid Input, please enter the date MM/DD/YY"),Toast.LENGTH_SHORT).show();
                 }
               }
         });
