@@ -34,12 +34,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Calculate My Age!" />
-    <TextView
-        android:id="@+id/result_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_green_dark"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:visibility="gone" />
 </LinearLayout>
